@@ -1,0 +1,2 @@
+docker-compose --file docker-compose.yml up -d --build --scale app-server=1
+docker-compose down
