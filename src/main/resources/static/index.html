@@ -1,10 +1,49 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JavaScript Ajax POST Demo</title>
+<script>
+function getStandings() {
+    // Creating the XMLHttpRequest object
+    var request = new XMLHttpRequest();
+    
+    var country = document.getElementById("country").value;
+    var league = document.getElementById("league").value;
+    var team = document.getElementById("team").value;
 
-<h1>
 
-Welcome
+    // Instantiating the request object
+    request.open("GET", "http://localhost:9002/api/v1/standings/"+country+"/"+team+"/"+league);
+    
+    // Defining event listener for readystatechange event
+    request.onreadystatechange = function() {
+        // Check if the request is compete and was successful
+        if(this.readyState === 4 && this.status === 200) {
+            // Inserting the response from server into an HTML element
+            document.getElementById("result").innerHTML = this.responseText;
+        }
+    };
 
-</h1>
-
-
+    // Sending the request to the server
+    request.send();
+}
+</script>
+</head>
+<body>
+    <form id="myForm">
+        <label>Country:</label>
+        <div><input type="text" name="country"></div>
+        <br>
+        <label>League:</label>
+        <div><input type="text" name="league"></div>
+        <br>
+        <label>Team:</label>
+        <div><input type="text" name="team"></div>
+        <br>
+    </form>    
+    <div id="result">
+        <p>Content of the result DIV box will be replaced by the server response</p>
+    </div>    
+</body>
 </html>
