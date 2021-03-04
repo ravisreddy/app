@@ -17,3 +17,4 @@ pipelineJob('app-service-job') {
         }
     }
 }
+

@@ -4,6 +4,31 @@
 <meta charset="utf-8">
 <title>JavaScript Ajax POST Demo</title>
 <script>
+
+function appendToTable(data){
+	console.log(data);
+	
+	console.log(data.length);
+	var content = '<Table style="border: 1px solid black;" id="details"><tbody>';
+	for(var i = 0; i < data.length; i++) {
+    	var obj = data[i];
+    	content = content + `<tr>`;
+    	content = content + `<td>Country ID & Name</td><td>(${obj.country_id}) ${obj.country_name}</td>`;
+    	content = content + `</tr>`;
+    	content = content + `<tr>`;
+    	content = content + `<td>League ID & Name</td><td>(${obj.league_id}) ${obj.league_name}</td>`;
+    	content = content + `</tr>`;
+    	content = content + `<tr>`;
+    	content = content + `<td>Team ID & Name</td><td>(${obj.team_id}) ${obj.team_name}</td>`;
+    	content = content + `</tr>`;
+    	content = content + `<tr>`;
+    	content = content + `<td>Overall League Position: </td><td>${obj.overall_league_position}</td>`;
+    	content = content + `</tr>`;
+    }
+    content = content + `</tbody></Table>`;
+	document.getElementById("result").innerHTML = content;
+}
+
 function getStandings() {
     // Creating the XMLHttpRequest object
     var request = new XMLHttpRequest();
@@ -20,8 +45,8 @@ function getStandings() {
     request.onreadystatechange = function() {
         // Check if the request is compete and was successful
         if(this.readyState === 4 && this.status === 200) {
-            // Inserting the response from server into an HTML element
-            document.getElementById("result").innerHTML = this.responseText;
+            appendToTable(JSON.parse(this.responseText));
+ 
         }
     };
 
@@ -31,19 +56,25 @@ function getStandings() {
 </script>
 </head>
 <body>
-    <form id="myForm">
-        <label>Country:</label>
-        <div><input type="text" name="country"></div>
-        <br>
-        <label>League:</label>
-        <div><input type="text" name="league"></div>
-        <br>
-        <label>Team:</label>
-        <div><input type="text" name="team"></div>
-        <br>
-    </form>    
-    <div id="result">
-        <p>Content of the result DIV box will be replaced by the server response</p>
-    </div>    
+	<form id="myForm">
+		<label>Country:</label>
+		<div>
+			<input type="text" value="41" id="country">
+		</div>
+		<br> <label>League:</label>
+		<div>
+			<input type="text" value="148" id="league">
+		</div>
+		<br> <label>Team:</label>
+		<div>
+			<input type="text" value="2626" id="team">
+		</div>
+		<br>
+		<p>
+			<button type="button" onclick="getStandings()">Fetch</button>
+		</p>
+	</form>
+	<div id="result"></div>
+
 </body>
 </html>
