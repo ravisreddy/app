@@ -1,6 +1,8 @@
 docker-compose --file docker-compose.yml up -d --build --scale app-server=1
 docker-compose down
-
+docker ps -a                                                                                                                                                                       130 ↵
+CONTAINER ID   IMAGE               COMMAND                  CREATED       STATUS       PORTS                    NAMES
+19ba81524b4e   app-server:latest   "java -jar /api-serv…"   2 hours ago   Up 2 hours   0.0.0.0:9002->8081/tcp   app-server
 
 Jenkinks DSL.
 pipelineJob('app-service-job') {
