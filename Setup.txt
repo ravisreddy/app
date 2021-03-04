@@ -1,2 +1,19 @@
 docker-compose --file docker-compose.yml up -d --build --scale app-server=1
 docker-compose down
+
+
+Jenkinks DSL.
+pipelineJob('app-service-job') {
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url 'https://github.com/ravisreddy/app.git'
+                    }
+                    branch 'master'
+                }
+            }
+        }
+    }
+}

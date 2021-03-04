@@ -1,22 +1,19 @@
 node {
 
-    
     stage('Clone and Build') {
       git branch: 'master', url: 'https://github.com/ravisreddy/app.git' 
-      
-      def mvn_version = 'M3'
-withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-  sh "mvn clean package"
-}
+      def mvnHome = tool 'Maven 3.5.2'         
+    	withMaven {
+      		sh "mvn clean package"
+    	} 
     }    
   
 	 stage('Sonar scan execution') {
         // Run the sonar scan
         steps {
             script {
-                def mvnHome = tool 'M3'
+                def mvnHome = tool 'Maven 3.5.2'
                 withSonarQubeEnv {
-
                     sh "'${mvnHome}/bin/mvn'  verify sonar:sonar -Dintegration-tests.skip=true -Dmaven.test.failure.ignore=true"
                 }
             }
